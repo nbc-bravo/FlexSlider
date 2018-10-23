@@ -960,7 +960,7 @@
             } else {
               slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
             }
-              
+
            }
             else{
               slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
@@ -1115,6 +1115,31 @@
 
       // FlexSlider: removed() Callback
       slider.vars.removed(slider);
+    };
+
+    slider.destroy = function() {
+      // Unbind resize event
+      $(window).unbind("resize" + slider.vars.eventNamespace + "-" + slider.id + " orientationchange" + slider.vars.eventNamespace + "-" + slider.id + " focus" + slider.vars.eventNamespace + "-" + slider.id, methods.resize);
+      // Slight timeout to avoid bug where unbound function still applies width to slides, while we also want to remove
+      // the style attributes during destroy.
+      setTimeout(function() {
+        var classNamespace = '.' + slider.vars.namespace; // Namespaced class selector
+        if (slider.vars.controlNav) slider.controlNav.closest(classNamespace + 'control-nav').remove(); // Remove control elements if present
+        if (slider.vars.directionNav) slider.directionNav.closest(classNamespace + 'direction-nav').remove(); // Remove direction-nav elements if present
+        if (slider.vars.pausePlay) slider.pausePlay.closest(classNamespace + 'pauseplay').remove(); // Remove pauseplay elements if present
+        slider.find('.clone').remove(); // Remove any flexslider clones
+        slider.unbind(slider.vars.eventNamespace); // Remove events on slider
+        if ( slider.vars.animation != "fade" ) slider.container.unwrap(); // Remove the .flex-viewport div
+        slider.container.removeAttr('style'); // Remove generated CSS (could collide with 3rd parties)
+        slider.container.unbind(slider.vars.eventNamespace); // Remove events on slider
+        slider.slides.removeAttr('style'); // Remove generated CSS (could collide with 3rd parties)
+        slider.slides.filter(classNamespace + 'active-slide').removeClass(slider.vars.namespace + 'active-slide'); // Remove slide active class
+        slider.slides.unbind(slider.vars.eventNamespace); // Remove events on slides
+        $(document).unbind(slider.vars.eventNamespace + "-" + slider.id); // Remove events from document for this instance only
+        $(window).unbind(slider.vars.eventNamespace + "-" + slider.id); // Remove events from window for this instance only
+        slider.stop(); // Stop the interval
+        slider.removeData('flexslider'); // Remove data
+      }, 5);
     };
 
     //FlexSlider: Initialize
