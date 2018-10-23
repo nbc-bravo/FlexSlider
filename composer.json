@@ -1,5 +1,5 @@
 {
-  "name": "woocommerce/FlexSlider",
+  "name": "bower-asset/flexSlider",
   "description": "An awesome, fully responsive jQuery slider toolkit.",
   "type": "bower-asset",
   "keywords": ["flexslider","slider","jquery","woocommerce","automattic"],
