@@ -1142,6 +1142,19 @@
       }, 5);
     };
 
+    // https://github.com/woothemes/FlexSlider/issues/334#issuecomment-9717754
+    // https://github.com/woothemes/FlexSlider/issues/334#issuecomment-23532860
+    slider.setOpts = function(opts) {
+      for (var opt in opts) {
+        slider.vars[opt] = opts[opt];
+      }
+      slider.setup();
+    };
+
+    slider.getOpts = function() {
+      return slider.vars;
+    };
+
     //FlexSlider: Initialize
     methods.init();
   };
