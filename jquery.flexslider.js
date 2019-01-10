@@ -1155,6 +1155,13 @@
       return slider.vars;
     };
 
+    // Triggers resize calculation
+    // This is a workaround for a bug where on resize and minItems and maxItems change, the computed slide width and
+    // margin-left calculation are incorrect. After update is done, trigger resize function once more to fix sizing.
+    slider.resize = function() {
+      methods.resize();
+    };
+
     //FlexSlider: Initialize
     methods.init();
   };
