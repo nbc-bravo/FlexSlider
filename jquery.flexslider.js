@@ -1144,11 +1144,13 @@
 
     // https://github.com/woothemes/FlexSlider/issues/334#issuecomment-9717754
     // https://github.com/woothemes/FlexSlider/issues/334#issuecomment-23532860
-    slider.setOpts = function(opts) {
+    slider.setOpts = function(opts, setup = true) {
       for (var opt in opts) {
         slider.vars[opt] = opts[opt];
       }
-      slider.setup();
+      if (setup) {
+        slider.setup();
+      }
     };
 
     slider.getOpts = function() {
